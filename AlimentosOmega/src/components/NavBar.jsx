@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,18 +9,19 @@ export const NavBar = () => {
     return (
 
         <header>
-            <Navbar bg="primary" data-bs-theme="dark">
+            <Navbar bg="primary" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">Alimentos Omega</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Frutos Secos</Nav.Link>
-                        <Nav.Link href="#features">Harinas</Nav.Link>
-                        <Nav.Link href="#pricing">Leches</Nav.Link>
-                    </Nav><CartWidget />
+                    <Navbar.Brand><NavLink to="/" style={{ color: 'white', textDecoration: 'none' }}>Alimentos omega</NavLink></Navbar.Brand>
+                    <Nav className="ms-auto"> 
+                        <NavLink to="Category/harinas" style={{ color: 'white', textDecoration: 'none' }} className="me-3">Harinas</NavLink>
+                        <NavLink to="Category/semillas" style={{ color: 'white', textDecoration: 'none' }} className="me-3">Semillas</NavLink>
+                        <NavLink to="Category/snacks" style={{ color: 'white', textDecoration: 'none' }} className="me-3">Snacks</NavLink>
+                        <NavLink to="Category/fideos" style={{ color: 'white', textDecoration: 'none' }} className="me-5">Fideos</NavLink>
+                    </Nav>
+                    <CartWidget />
                 </Container>
             </Navbar>
         </header>
-
 
     );
 

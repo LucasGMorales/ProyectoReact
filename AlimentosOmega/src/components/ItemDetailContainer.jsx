@@ -4,12 +4,18 @@ import { useEffect, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 
+import {ItemDetail} from "../components/ItemDetail";
+
 import { products } from '../../../json/productos';
 
-import { ItemList } from './itemList';
+import { Item } from './Item';
 
-export const ItemListContainer = (props) => {
-    const [items, setItems] = useState([]);
+
+
+
+
+export const ItemDetailContainer = () => {
+    const [item, setItem] = useState(null);
 
     const { id } = useParams();
 
@@ -23,22 +29,13 @@ export const ItemListContainer = (props) => {
         });
 
         mypromise.then((response) => {
-            if (!id) {
-                setItems(response);
-            } else {
-                const filterByCategory = response.filter(
-                    (item) => item.category === id
+            const findById = response.find((item) => item.id === Number(id)
                 );
-                setItems(filterByCategory);
-            }
+                setItem(findById);
+            
         });
     }, [id]);
 
-    console.log(items);
-
-    return (<Container className='mt-3'>
-        <h1>{props.greeting}</h1>
-        <ItemList items={items} />
-    </Container>);
+    return (<Container className='mt-3'> {item ? <ItemDetail item={item} /> : <>Loading...</>}</Container>);
 
 }
