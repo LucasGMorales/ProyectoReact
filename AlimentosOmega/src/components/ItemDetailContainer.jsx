@@ -4,11 +4,9 @@ import { useEffect, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 
-import {ItemDetail} from "../components/ItemDetail";
+import ItemDetail from "../components/ItemDetail";
 
-import { products } from '../../../json/productos';
-
-import { Item } from './Item';
+import { getFirestore, getDoc, doc } from "firebase/firestore";
 
 
 
@@ -19,23 +17,18 @@ export const ItemDetailContainer = () => {
 
     const { id } = useParams();
 
-
     useEffect(() => {
-        console.log(id);
-        const mypromise = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(products);
-            }, 2000);
-        });
-
-        mypromise.then((response) => {
-            const findById = response.find((item) => item.id === Number(id)
-                );
-                setItem(findById);
-            
+        const db = getFirestore();
+        const refDoc = doc(db, "items", id);
+    
+        getDoc(refDoc).then((snapshot) => {
+            setItem({ id: snapshot.id, ...snapshot.data() });
         });
     }, [id]);
-
+    
     return (<Container className='mt-3'> {item ? <ItemDetail item={item} /> : <>Loading...</>}</Container>);
 
 }
+
+
+export default ItemDetailContainer;

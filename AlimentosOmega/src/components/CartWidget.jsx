@@ -1,11 +1,19 @@
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { CartContext } from '../contexts/CartContext';
+import cart from '../img/cart.png';
 
-import cart from '../img/cart.png'
+export const CartWidget = () => {
+    const { items } = useContext(CartContext);
 
-export const CartWidget = () =>{
-    return(
-        <>
-    <img src={cart} alt="Carrito" width={40}/>
-    <span>4</span>
-    </>
-    )
-}
+    const total = items.reduce((acumulador, item) => acumulador + item.quantity, 0);
+
+    return (
+        <NavLink to="/carrito" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div>
+                <img src={cart} alt="Carrito" width={40} />
+                <span>{total}</span>
+            </div>
+        </NavLink>
+    );
+};
